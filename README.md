@@ -12,6 +12,7 @@ Free for academic uses. Licensed under LGPL 3.0.
 - [Features](#features)
 - [Installation](#installation)
 - [Getting Started](#getting-started)
+- [Demo](#Demo)
 - [Citation](#citation)
 
 # Features
