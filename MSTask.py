@@ -14,7 +14,6 @@ import time, pickle
 from MSOperator import op_FILL_LIST_PATH_MS
 from MSFunctionIO import CFunctionINI, CFunctionParseMGF, CFunctionLoadPKL, CFunctionWritePrepMGF
 from MSFunctionIO import CFunctionTempPath
-from MSFunctionTag import CFunctionDiNovo, CFunctionAAMassIndex
 from MSFunctionPreprocess import CFunctionPreprocess, CFunctionPreprocessNeuCode, CFunctionPreprocessForXueLi, CFunctionPreprocessForXueLiNeuCode
 from MSFunctionNeuCodeDetection import CFunctionNeuCodeDetection
 from MSFunctionMirrorFinder import CFunctionPrecursorMassIndex, CFunctionMirrorFinder
@@ -1322,104 +1321,6 @@ class CTaskPairing:
                             f_res.write(writeStr)
 
         # stat?
-
-
-# tag
-# #######################
-# 从头测序  ban!
-class CTaskTag:
-    def __init__(self, inputDP):
-        self.dp = inputDP
-        self.min_tag_length = 3
-        self.max_tag_length = 5
-        self.num = 400
-        self.mode = self.dp.myCFG.D9_DE_NOVO_APPROACH
-        self.tagLengthList = [tmp_tag_len for tmp_tag_len in range(self.min_tag_length, self.max_tag_length + 1)]
-
-    def work(self, raw_index):
-
-        raw_name = self.dp.LIST_MS2_NAME[raw_index]
-
-        # 建立索引，二级谱数据提取tag，搜索
-        # logToUser(INFO_TO_USER_TaskDiNovo[0] + "\t[" + raw_name + "]")
-
-        # 读取pkl文件，谱图预处理，提取DAG图
-
-        # logToUser(INFO_TO_USER_TaskDiNovo[1])
-        # logToUser(INFO_TO_USER_TaskDiNovo[2])
-
-        # 获取文件路径
-        path = self.dp.LIST_PATH_MS2[raw_index]  # string
-
-        functionLoadPKL = CFunctionLoadPKL(self.dp)
-        functionAAMassIndex = CFunctionAAMassIndex(self.dp)
-
-        # map，list，list
-        aaMarkSetDict, aaMassIndex, termAAMassIndex = functionAAMassIndex.generateDictAndIndex(inputAAType=1,
-                                                                                               inputModType=5)
-        functionDiNovo = CFunctionDiNovo(self.dp, aaMarkSetDict, aaMassIndex, termAAMassIndex,
-                                                    maxPathNum=self.num)
-
-        # 从硬盘中载入，得到CFileMS2，也就是一整个MS2文件
-        dataMS2 = functionLoadPKL.loadMS2PKL(path + ".pkl")
-
-        # 这块儿是为了输出信息准备的，每隔多少个谱图，就输出
-        # 也就是percentage_label，它是一个int类型的变量
-        len_ms_num = len(dataMS2.INDEX_SCAN)
-        percentage_label = int(len_ms_num / 20.0)
-        if percentage_label == 0:
-            percentage_label = 1
-
-        # 计数器，输出信息
-        scan_num_counter = 0
-        time1 = time.perf_counter()
-
-        for index in dataMS2.INDEX_SCAN[:]:
-
-            if index % percentage_label == 0:
-                # 输出信息，记录在log日志中
-                logToUser("\t[" + raw_name + "]\t" + "%.2f" % (
-                            100.0 * scan_num_counter / len_ms_num) + "% spectra have been finished.")
-                pass
-
-            # 得到一个新的spectrum，类型是CSpectrum
-            spectrum = functionLoadPKL.getSingleMS2Spectrum(dataMS2, index)
-
-            scan_num_counter += 1
-
-            # taglist实际上是个dict类型，忘了改了= =
-            # ms2_info是谱图的一些基本信息，这个可以单独写一个方法先提取出来，后面用
-            taglist, ms2_info = functionDiNovo.sequencing(spectrum, complement=True)
-
-            # 对于不同长度的tag进行写入，i是整数
-            for i in range(len(taglist)):
-
-                for tmp_tag_key in self.tagLengthList:
-                    # list [dict{kdy1:[list], key2:[list], ...}]
-                    buff_tag_list = taglist[i][tmp_tag_key]
-                    # [..., (lf_mass, seq, rf_mass, score), ...]
-                    buff_file_name = ms2_info[i][0]
-                    buff_output_path = self.dp.myCFG.E1_PATH_EXPORT + raw_name + "/total." + str(
-                        tmp_tag_key) + "-tag-extract.list"
-                    with open(buff_output_path, "a", encoding="utf-8") as f:
-                        f.write(buff_file_name + "\n")
-                        f.write("Ret time: " + str(spectrum.SCAN_RET_TIME) + "\n")
-                        count = 1  # 这个是记录rank用的
-                        for item in buff_tag_list:
-                            lf_mass = "%.4f" % item[0]  # .lfMass
-                            tag_seq = item[2]  # .tagSeq
-                            rf_mass = "%.4f" % item[1]  # .rfMass
-                            score = "%.4f" % item[3]  # .tagScore
-                            mod_info = item[4]  # .tagMod
-                            # 挨个写入到文件中，并使用 \t 字符把他们给隔开
-                            f.write("\t" + "\t".join([str(count), lf_mass, tag_seq, rf_mass, mod_info, score]) + "\n")
-                            count += 1
-
-        time2 = time.perf_counter()
-
-        # logToUser(INFO_TO_USER_TaskDiNovo[3] + "\t[" + raw_name + "]")
-
-        # logToUser(INFO_TO_USER_TaskDiNovo[4] + "%.4fs." % (time2 - time1))
 
 
 class CTaskDiNovo:
