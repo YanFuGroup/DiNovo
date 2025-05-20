@@ -48,13 +48,13 @@ To  run the software, double click the *"DiNovo.exe"* to start the GUI and then:
 3. ​**Choose *De Novo* Algorithms**​  
      - ​**pNovoM2**​  
      - ​**MirrorNovo**​
-    > Note: Select at least one *de novo* algorithm (both are enabled by default)
+    > Note: Select at least one *de novo* algorithm (both are enabled by default).
 
 4. ​**Set Output Directory**​  
-   - Specify the ​**Result Path**​ to save analysis results.
+   - Specify the ​*Result Path*​ to save analysis results.
 
 5. ​**Run Analysis**​  
-   - Click the ​**Run**​ button to start processing.
+   - Click the ​*Run*​ button to start processing.
 
 For advanced configurations or command-line usage, see the *"DiNovo User Guide"*.
 
@@ -69,12 +69,13 @@ To run on the demo data, take the following steps:
    - The parameters will be automatically set, including input data and output path.
 
 2. **Click the *Run* Button**
-   - It takes a few minutes to complete the analysis on a typical desktop computer.
+   - It takes a few minutes to complete the analysis on a typical desktop computer, and it will show "\[DiNovo\] Finished!" after completion.
 
 3. **Check the Results**
    - The results are saved in the *"demo_result"* folder.
    - The expected results are in the *"demo_expected_result"* folder for comparison.
    - Note that this demo dataset is only used to demonstrate the use of the software, and the sequencing results may not be correct. To test on larger dataset, please visit [DiNovo website](http://fugroup.amss.ac.cn/software/DiNovo/DiNovoIndex.html).
+   - For more detailed instructions, eg. the meaning of the parameters and output results, please refer to the *"DiNovo User Guide"*.
 
 # Citation
    
