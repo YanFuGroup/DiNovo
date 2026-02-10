@@ -77,10 +77,6 @@ To run on the demo data, take the following steps:
    - Note that this demo dataset is only used to demonstrate the use of the software, and the sequencing results may not be correct. To test on larger dataset, please visit [DiNovo website](http://fugroup.amss.ac.cn/software/DiNovo/DiNovoIndex.html).
    - For more detailed instructions, eg. the meaning of the parameters and output results, please refer to the *"DiNovo User Guide"*.
 
-# Citation
-   
-**DiNovo: high-coverage, high-confidence *de novo* peptide sequencing using mirror proteases and deep learning ([bioRxiv 2025.03.20.643920](https://www.biorxiv.org/content/10.1101/2025.03.20.643920)).**
-
 ---
 
 For more information about DiNovo and more test data, see [DiNovo website](http://fugroup.amss.ac.cn/software/DiNovo/DiNovoIndex.html).
