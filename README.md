@@ -2,7 +2,7 @@
 <img src="images/DiNovo-logo.png" width="300px"/>
 </div>
 
-DiNovo is a software tool for automated, high-coverage and confidence *de novo* peptide sequencing from tandem mass spectra based on paired mirror proteases and deep learning. It currently supports trypsin & lysargiNase, and lysC & lysN. The kernel of DiNovo is written in Python3 and the graphical user interface is implemented in Java language in Windows Systems.
+DiNovo is a software tool for automated, amino-acid–resolution *de novo* peptide sequencing with high coverage and confidence from tandem mass spectra based on NeuCode labeling, paired mirror proteases and deep learning. It currently supports trypsin & lysargiNase, and lysC & lysN. The kernel of DiNovo is written in Python3 and the graphical user interface is implemented in Java language in Windows Systems.
 
 DiNovo can be used as a standalone executable, with GUI or command line.
 
@@ -13,12 +13,12 @@ Free for academic uses. Licensed under LGPL 3.0.
 - [Installation](#installation)
 - [Getting Started](#getting-started)
 - [Demo](#Demo)
-- [Citation](#citation)
 
 # Features
 
-* **Mirror-Spectra Recognition** - Fast and accurate recognition of mirror spectral pairs based on a statistical scoring algorithm.
-* ***De Novo* Sequencing** - Peptide sequencing from mirror spectral pairs, including MirrorNovo algorithm (deep learning based, running on GPU), and pNovoM2 algorithm (updated version of pNovoM, graph theory based, running on CPU).
+* **Fragment Ion Type Discrimination** - DiNovo can discriminate fragment ion types from mass signatures of NeuCode labeling.
+* **Mirror-Spectra Recognition** - Fast and accurate recognition of mirror spectra with a statistical scoring algorithm, which named MirrorFinder. Based on NeuCode labeling, MirrorFinder achieves high‑confidence mirror-spectra identification.
+* ***De Novo* Sequencing** - Peptide *de novo* sequencing from mirror spectra, including MirrorNovo algorithm (deep learning based, running on GPU), and pNovoM2 algorithm (updated version of pNovoM, graph theory based, running on CPU). More importantly, based on NeuCode labeling, DiNovo achieves amino-acid–resolution *de novo* peptide sequencing with high confidence.
 * **Quality Control** - False discovery rate (FDR) estimation based on target-decoy strategies.
 * **High Speed** - Whole-process acceleration based on multi-level index system and optimized multiprocess parallel strategy.
 * **Easy to Use** - Friendly GUI design and optimized command-line interaction.
@@ -44,6 +44,8 @@ To  run the software, double click the *"DiNovo.exe"* to start the GUI and then:
    - Provide mass spectra datasets (.mgf format) in:  
      - `[A]Data File List`  
      - `[B]Data File List`
+
+   - If those data labeled by NeuCode, select 'NeuCode Labeling' in `Label Type`.
 
 3. ​**Choose *De Novo* Algorithms**​  
      - ​**pNovoM2**​  
@@ -76,6 +78,7 @@ To run on the demo data, take the following steps:
    - The expected results are in the *"demo_expected_result"* folder for comparison.
    - Note that this demo dataset is only used to demonstrate the use of the software, and the sequencing results may not be correct. To test on larger dataset, please visit [DiNovo website](http://fugroup.amss.ac.cn/software/DiNovo/DiNovoIndex.html).
    - For more detailed instructions, eg. the meaning of the parameters and output results, please refer to the *"DiNovo User Guide"*.
+
 
 ---
 
