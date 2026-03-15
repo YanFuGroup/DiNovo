@@ -300,11 +300,8 @@ class CFunctionINI:
                     else:
 
                         str_sites = toolGetWord(toolGetWord(line, 1, '='), 0, " ")
-
                         str_position = toolGetWord(line, 1, ' ')
-
                         str_mono_mass = toolGetWord(line, 2, ' ')
-
                         nBlank = toolCountCharInString(line, ' ')
 
                         if nBlank > 5:
@@ -443,9 +440,13 @@ class CFunctionConfig:
             f.write("# ------------------ <DiNovo Configuration File> ------------------" + "\n")
             f.write("# =================================================================" + "\n")
             f.write("# [Using Method of DiNovo]" + "\n")
-            f.write("# 1. Running DiNovo.exe, get the DiNovo.cfg(it's me!)" + "\n")
+            f.write("#     -- COMMAND LINE --" + "\n")
+            f.write("# 1. Running DiNovoKernel.exe, get the DiNovo.cfg(it's me!)" + "\n")
             f.write("# 2. Filling this config file(you can change the file name as you wish)" + "\n")
-            f.write("# 3. Opening a terminal and running command line: DiNovo.exe xxx.cfg" + "\n")
+            f.write("# 3. Opening a terminal and running command line: DiNovoKernel.exe xxx.cfg" + "\n")
+            f.write("#     ------ GUI -------" + "\n")
+            f.write("# Double click \'DiNovo.exe\' and fill the config parameters, then click \'[Run]\'." + "\n")
+
             f.write("#" + "\n")
             f.write("# Any question, please send e-mail to: yfu@amss.ac.cn" + "\n")
             f.write("# Enjoy your time! Good luck!  :-)" + "\n")
@@ -474,13 +475,14 @@ class CFunctionConfig:
             f.write("# PATH_MGF_A=D:\\test\\Trypsin\\" + "\n")
             f.write("# PATH_MGF_B=D:\\test\\LysargiNase\\" + "\n")
 
-            f.write("FIX_MOD=" + str(config.A3_FIX_MOD) + '\n')
-            f.write("VAR_MOD=" + str(config.A4_VAR_MOD) + '\n')
-            f.write("# Please use \"|\" to separate the modification names." + "\n")
-            f.write("# Please read modification.ini and fill like:" + "\n")
-            f.write("# FIX_MOD=Carbamidomethyl[C]" + "\n")
-            f.write("# VAR_MOD=Oxidation[M]|Deamidated[N]" + "\n")
-            f.write("# If you don't want to fill in, just leave a blank, it's OK  :-)" + "\n")
+            # f.write("FIX_MOD=" + str(config.A3_FIX_MOD) + '\n')
+            # f.write("VAR_MOD=" + str(config.A4_VAR_MOD) + '\n')
+            # f.write("# Please use \"|\" to separate the modification names." + "\n")
+            # f.write("# Please read modification.ini and fill like:" + "\n")
+            # f.write("# FIX_MOD=Carbamidomethyl[C]" + "\n")
+            # f.write("# VAR_MOD=Oxidation[M]|Deamidated[N]" + "\n")
+            # f.write("# If you don't want to fill in, just leave a blank, it's OK  :-)" + "\n")
+
             f.write("LABEL_TYPE=" + str(config.A7_LABEL_TYPE) + "\n")
             f.write("# 0: Unlabeling." + "\n")
             f.write("# [In vivo labeling]" + "\n")
@@ -513,7 +515,7 @@ class CFunctionConfig:
             f.write("MULTIPROCESS_NUM=" + str(config.D2_MULTIPROCESS_NUM) + '\n')
             f.write("# Accelerating! But the memory cost will be higher as the number gets higher." + "\n")
 
-            f.write("\n# [Spectral Preprocessing]\n")
+            f.write("\n# [Preprocess Parameters]\n")
             f.write("# [NeuCode Peaks Detection] Detecting labeling peaks while samples are labeled with NeuCode." + "\n")
             f.write("NEUCODE_PEAK_DETECTION_APPROACH=" + str(config.B9_NEUCODE_DETECT_APPROACH) + "\n")
             f.write("# 1: Default detection approach with deisotope and without classification model, exporting within preprocessed .mgf." + "\n")
@@ -536,11 +538,11 @@ class CFunctionConfig:
             f.write("PEAK_NUM_PER_BIN=" + str(config.B7_ROUND_TWO_PEAK_NUM_PER_BIN) + "\n")
             f.write("MASS_BIN_LENGTH=" + str(config.B8_ROUND_TWO_MASS_BIN_LENGTH) + "\n")
             f.write("# REMOVE_IMMONIUM: 0 means turning off, and 1 means turning on." + "\n")
-            f.write("# Default: Remove immonium ions, and hold 4 peaks per 100Da at most." + "\n")
+            f.write("# Default: Remove immonium ions, and hold 7 peaks per 100Da at most." + "\n")
 
-            f.write("\n# [Spectral Pairing]\n")
+            f.write("\n# [MirrorFinder Parameters]\n")
             f.write("PAIR_DELTA_RT_THRESHOLD=" + str(config.C0_MIRROR_DELTA_RT) + "\n")
-            f.write("# Threshold of delta RT for judging mirror spectral pair, default: 900.0s." + "\n")
+            f.write("# Threshold of delta RT for judging mirror spectral pair, default: 10000.0s." + "\n")
             f.write("PAIR_FILTER_APPROACH=" + str(config.C10_PAIR_FILTER_APPROACH) + "\n")
             f.write("# Spectral pair filter approach:" + "\n")
             f.write("# 0: Direct judge." + "\n")
@@ -550,7 +552,7 @@ class CFunctionConfig:
             f.write("PAIR_P_VALUE_THRESHOLD=" + str(config.C11_PAIR_P_VALUE_THRESHOLD) + "\n")
             f.write("# Threshold when using p-Value, default: 0.05." + "\n")
             f.write("PAIR_DECOY_APPROACH=" + str(config.C12_PAIR_DECOY_APPROACH) + "\n")
-            f.write("# Test mode for decoy generation:" + "\n")
+            f.write("# Test mode for spectral-pair decoy generation:" + "\n")
             f.write("# 0: No decoy generated there." + "\n")
             f.write("# 1: Shifted precursor mass with +X Da." + "\n")
             f.write("# 2: Shifted fragment delta with +X Da, within target-decoy competition." + "\n")
@@ -607,11 +609,11 @@ class CFunctionConfig:
             f.write("# 3: [Combination] De Novo sequencing by MirrorNovo & pNovoM.exe." + "\n")
             f.write("MIRROR_NOVO_MODEL_PATH=" + config.D10_MIRROR_NOVO_MODEL_PATH + "\n")
             f.write("PNOVOM_EXE_PATH=" + config.D11_PNOVOM_EXE_PATH + "\n")
-            f.write("# The path of MirrorNovo / pNovoM.exe for de Novo sequencing." + "\n")
+            f.write("# The path of MirrorNovo / pNovoM2.exe for de Novo sequencing." + "\n")
             f.write("# [ATTENTION] if DE_NOVO_APPROACH=1/3, MIRROR_NOVO_MODEL_PATH need to fill path of MirrorNovo.py." + "\n")
             f.write("# [ATTENTION] if DE_NOVO_APPROACH=2/3, PNOVOM_EXE_PATH need to fill path of pNovoM2.exe." + "\n")
-            f.write("COMBINE_RESULT=1" + "\n")
-            f.write("# [ATTENTION] Default 1: combining two sequencing results when DE_NOVO_APPROACH=3(To be implemented)." + "\n")
+            # f.write("COMBINE_RESULT=1" + "\n")
+            # f.write("# [ATTENTION] Default 1: combining two sequencing results when DE_NOVO_APPROACH=3(To be implemented)." + "\n")
             f.write("MIN_PRECURSOR_MASS=" + str(config.A5_MIN_PRECURSOR_MASS) + "\n")
             f.write("MAX_PRECURSOR_MASS=" + str(config.A6_MAX_PRECURSOR_MASS) + "\n")
             f.write("# Default precursor mass range: [300.0Da, 3500.0Da]." + "\n")
@@ -624,13 +626,38 @@ class CFunctionConfig:
             f.write("MSMS_TOL_PPM=" + str(config.D6_MSMS_TOL_PPM) + '\n')
             f.write("# MS\\MSMS_TOL_PPM: 0 for Da, and 1 for PPM." + '\n')
             f.write("# Eg. MSMS_TOL=20, MSMS_TOL_PPM=1, it means that fragment mass tolerance is setting as 20 PPM." + '\n')
-            f.write("# Fragment mass tolerance is used for scoring in spectral pairing(about twice tolerance) and de novo sequencing." + "\n")
+            f.write("# Precursor and fragment mass tolerance are used for scoring in spectral pairing(about twice tolerance) and de novo sequencing." + "\n")
             f.write("DE_NOVO_SINGLE_ENZYME_SPECTRUM=0" + "\n")
-            f.write("# 1: De novo sequencing for NeuCode-labelling spectra using pNovoM2." + "\n")
-            f.write("PNOVOM2_MODE=1" + "\n")
-            f.write("# [ATTENTION] Special function of pNovoM2(To be implemented)." + "\n")
-            f.write("BATCH_SIZE=2" + "\n")
-            f.write("# [ATTENTION] Accelation for MirrorNovo. Setting it 2 to 10 needs about 4 to 10 GB GPU memory." + "\n")
+            f.write("# When using pNovoM2 to sequencing single-enzyme data, pNovoM2 will use its \'single-enzyme sequencing\' mode." + "\n")
+            f.write("# When using MirrorNovo to sequencing single-enzyme data, MirrorNovo will auto call GCNovo to finish it." + "\n")
+            # f.write("# 1: De novo sequencing for NeuCode-labelling spectra using pNovoM2." + "\n")
+            # f.write("PNOVOM2_MODE=1" + "\n")
+            # f.write("# [ATTENTION] Special function of pNovoM2(To be implemented)." + "\n")
+
+
+            # f.write("BATCH_SIZE=2" + "\n")
+            # [MirrorNovo Parameters]
+            f.write("\n# [MirrorNovo Parameters]\n")
+            f.write("MIRRORNOVO_MAX_NUM_PEAKS=" + str(config.M1_MIRRORNOVO_MAX_NUM_PEAKS) + "\n")
+            f.write("MIRRORNOVO_BEAM_SIZE=" + str(config.M1_MIRRORNOVO_BEAM_SIZE) + "\n")
+            f.write("MIRRORNOVO_BATCH_SIZE=" + str(config.M1_MIRRORNOVO_BATCH_SIZE) + "\n")
+            f.write("# Setting of \'MAX_NUM_PEAKS=500 & BEAM_SIZE=10\' is recommended." + "\n")
+            f.write("# Setting of \'BATCH_SIZE\': acceleration for MirrorNovo." + "\n")
+            f.write("# When setting \'MAX_NUM_PEAKS=500 & BEAM_SIZE=10\':" + "\n")
+            f.write("# Setting \'BATCH_SIZE\'  30 to  80 will take up about  4 to 10 GB GPU memory." + "\n")
+            f.write("# Setting \'BATCH_SIZE\' 120 to 150 will take up about 20 to 24 GB GPU memory." + "\n")
+
+            # [GCNovo Parameters]
+            f.write("\n# [GCNovo Parameters]\n")
+            f.write("GCNOVO_MAX_NUM_PEAKS=" + str(config.M2_GCNOVO_MAX_NUM_PEAKS) + "\n")
+            f.write("GCNOVO_BEAM_SIZE=" + str(config.M2_GCNOVO_BEAM_SIZE) + "\n")
+            f.write("GCNOVO_BATCH_SIZE=" + str(config.M2_GCNOVO_BATCH_SIZE) + "\n")
+            f.write("# Setting of \'MAX_NUM_PEAKS=500 & BEAM_SIZE=10\' is recommended." + "\n")
+            f.write("# Setting of \'BATCH_SIZE\': acceleration for GCNovo." + "\n")
+            f.write("# When setting \'MAX_NUM_PEAKS=500 & BEAM_SIZE=10\':" + "\n")
+            f.write("# Setting \'BATCH_SIZE\'   2 to  10 will take up about  4 to 10 GB GPU memory." + "\n")
+            f.write("# Setting \'BATCH_SIZE\'  20 to  25 will take up about 20 to 24 GB GPU memory." + "\n")
+
 
 
             f.write("\n# [Export]\n")
@@ -719,10 +746,10 @@ class CFunctionConfig:
             cfg.A2_PATH_MGF_LYS = str_value.replace("/", "\\")
 
         elif "PATH_MGF_TRY" == str_name:
-            logGetError("\n[Error] Please use the newest .cfg file, eg.just run \"DiNovo.exe\" in command line window to get it.")
+            logGetError("\n[Error] Please use the newest .cfg file, eg.just run \"DiNovoKernel.exe\" in command line window to get it.")
 
         elif "PATH_MGF_LYS" == str_name:
-            logGetError("\n[Error] Please use the newest .cfg file, eg.just run \"DiNovo.exe\" in command line window to get it.")
+            logGetError("\n[Error] Please use the newest .cfg file, eg.just run \"DiNovoKernel.exe\" in command line window to get it.")
 
         elif "FIX_MOD" == str_name:
             cfg.A3_FIX_MOD = str_value
@@ -883,9 +910,29 @@ class CFunctionConfig:
             ...
 
         elif "BATCH_SIZE" == str_name:
-            if str_value:  # not null string
-                cfg.D13_BATCH_SIZE = int(str_value)
+            logGetError("\n[Error] Please use the newest .cfg file, eg.just run \"DiNovoKernel.exe\" in command line window to get it.")
+        #     if str_value:  # not null string
+        #         cfg.D13_BATCH_SIZE = int(str_value)
         # -----------------------------------
+
+        # [MIRROR NOVO]
+        elif "MIRRORNOVO_MAX_NUM_PEAKS" == str_name:
+            cfg.M1_MIRRORNOVO_MAX_NUM_PEAKS = int(str_value)
+
+        elif "MIRRORNOVO_BEAM_SIZE" == str_name:
+            cfg.M1_MIRRORNOVO_BEAM_SIZE = int(str_value)
+
+        elif "MIRRORNOVO_BATCH_SIZE" == str_name:
+            cfg.M1_MIRRORNOVO_BATCH_SIZE = int(str_value)
+
+        elif "GCNOVO_MAX_NUM_PEAKS" == str_name:
+            cfg.M2_GCNOVO_MAX_NUM_PEAKS = int(str_value)
+
+        elif "GCNOVO_BEAM_SIZE" == str_name:
+            cfg.M2_GCNOVO_BEAM_SIZE = int(str_value)
+
+        elif "GCNOVO_BATCH_SIZE" == str_name:
+            cfg.M2_GCNOVO_BATCH_SIZE = int(str_value)
 
         # [EXPORT SETTING]
         # -----------------------------------

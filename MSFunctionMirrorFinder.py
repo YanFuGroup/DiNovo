@@ -360,8 +360,8 @@ class CFunctionMirrorFinder:
         legal_idx_1 = legal_idx_ls * ((self.try_flag * lys_flag) | (self.try_flag_ * lys_flag_))
         legal_idx_2 = legal_idx_ls * ((self.try_flag_ * lys_flag) | (self.try_flag * lys_flag_))
         d1, d2 = delta_matrix[legal_idx_1], delta_matrix[legal_idx_2]
-        trans_idx_1 = (d1 * self.one_over_bin + np.sign(d1) * 0.5).astype(np.int) + self.half_bin_num
-        trans_idx_2 = (d2 * self.one_over_bin + np.sign(d2) * 0.5).astype(np.int) + self.half_bin_num
+        trans_idx_1 = (d1 * self.one_over_bin + np.sign(d1) * 0.5).astype(np.int64) + self.half_bin_num
+        trans_idx_2 = (d2 * self.one_over_bin + np.sign(d2) * 0.5).astype(np.int64) + self.half_bin_num
 
         self.time_score[0] += time.perf_counter() - time_flag_0
         time_flag_0 = time.perf_counter()
@@ -428,7 +428,7 @@ class CFunctionMirrorFinder:
             i_scr_matrix2_try = self.try_int_x_wei2 + lys_int * 0  # int socre matrix with 0.7
             i_scr_matrix1_lys = self.try_int_x_wei1 * 0 + lys_int * self.alpha1  # int score matrix with 0.3
             i_scr_matrix2_lys = self.try_int_x_wei2 * 0 + lys_int * self.alpha2  # int socre matrix with 0.7
-            delta_matrix = (delta_matrix * self.one_over_bin + np.sign(delta_matrix) * 0.5).astype(np.int) + self.half_bin_num
+            delta_matrix = (delta_matrix * self.one_over_bin + np.sign(delta_matrix) * 0.5).astype(np.int64) + self.half_bin_num
 
             b_delta_flag, y_delta_flag = (delta_matrix == b_delta_idx[0]), (delta_matrix == y_delta_idx[0])
             if len(b_delta_idx) > 1:
@@ -620,7 +620,7 @@ class CFunctionMirrorFinder:
         scores = scoreList[scoreList > 0]
         scores.sort()
         n_score = len(scores)
-        tail1 = np.around(n_score * 0.9).astype(np.int) - 1  # python里取地址，从0开始，因此index比要少1
+        tail1 = np.around(n_score * 0.9).astype(np.int64) - 1  # python里取地址，从0开始，因此index比要少1
         tail2 = n_score - 10  # 因为python切片中:后的index不取值，因此n_score - 10 (- 1 + 1) 结果不变
         tail_num = tail2 - tail1
 
@@ -687,8 +687,8 @@ class CFunctionMirrorFinder:
         for key in use_dict:
 
             delta1, delta2 = use_dict[key]
-            trans1 = np.around((delta1 + self.half_bin_add_interval) / self.bin).astype(np.int)
-            trans2 = np.around((delta2 + self.half_bin_add_interval) / self.bin).astype(np.int)
+            trans1 = np.around((delta1 + self.half_bin_add_interval) / self.bin).astype(np.int64)
+            trans2 = np.around((delta2 + self.half_bin_add_interval) / self.bin).astype(np.int64)
             res[key] = np.array([trans1, trans2])
             res[0] += [trans1, trans2]
             # if key == 3:
@@ -707,8 +707,8 @@ class CFunctionMirrorFinder:
 
         for key in use_dict:
             _, delta1, delta2 = use_dict[key]
-            trans1 = np.around((delta1 + self.half_bin_add_interval) / self.bin).astype(np.int)
-            trans2 = np.around((delta2 + self.half_bin_add_interval) / self.bin).astype(np.int)
+            trans1 = np.around((delta1 + self.half_bin_add_interval) / self.bin).astype(np.int64)
+            trans2 = np.around((delta2 + self.half_bin_add_interval) / self.bin).astype(np.int64)
             res[key] = np.array([trans1, trans2])
             res[0] += [trans1, trans2]
 
@@ -759,7 +759,7 @@ class CFunctionMirrorFinder:
     #         if aa_mass > 200:
     #             continue
     #         # index trans
-    #         # (d1 * self.one_over_bin + np.sign(d1) * 0.5).astype(np.int) + self.half_bin_num
+    #         # (d1 * self.one_over_bin + np.sign(d1) * 0.5).astype(np.int64) + self.half_bin_num
     #         min_idx = int((aa_mass - self.bin/2) * self.one_over_bin + 0.5) + self.half_bin_num
     #         max_idx = int((aa_mass + self.bin/2) * self.one_over_bin + 0.5) + self.half_bin_num + 1
     #         for index in range(min_idx, min(self.bin_num+1, max_idx)):
@@ -776,7 +776,7 @@ class CFunctionMirrorFinder:
     #         #     if aa_mass > 200:
     #         #         continue
     #         #     # index trans
-    #         #     # (d1 * self.one_over_bin + np.sign(d1) * 0.5).astype(np.int) + self.half_bin_num
+    #         #     # (d1 * self.one_over_bin + np.sign(d1) * 0.5).astype(np.int64) + self.half_bin_num
     #         #     min_idx = int((aa_mass - self.bin / 2) * self.one_over_bin + 0.5) + self.half_bin_num
     #         #     max_idx = int((aa_mass + self.bin / 2) * self.one_over_bin + 0.5) + self.half_bin_num + 1
     #         #     for index in range(min_idx, min(self.bin_num + 1, max_idx)):
@@ -793,7 +793,7 @@ class CFunctionMirrorFinder:
     #         #         if aa_mass > 200:
     #         #             continue
     #         #         # index trans
-    #         #         # (d1 * self.one_over_bin + np.sign(d1) * 0.5).astype(np.int) + self.half_bin_num
+    #         #         # (d1 * self.one_over_bin + np.sign(d1) * 0.5).astype(np.int64) + self.half_bin_num
     #         #         min_idx = int((aa_mass - self.bin / 2) * self.one_over_bin + 0.5) + self.half_bin_num
     #         #         max_idx = int((aa_mass + self.bin / 2) * self.one_over_bin + 0.5) + self.half_bin_num + 1
     #         #         for index in range(min_idx, min(self.bin_num + 1, max_idx)):

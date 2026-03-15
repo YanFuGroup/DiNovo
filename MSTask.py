@@ -784,8 +784,8 @@ class CTaskPairing:
 
         for i in range(tryN):
             for j in range(lysN):
-                # self.oneByOnePairSpec(i, j)
-                myPool.apply_async(func=self.oneByOnePairSpec, args=(i, j))
+                self.oneByOnePairSpec(i, j)
+                # myPool.apply_async(func=self.oneByOnePairSpec, args=(i, j))
 
         myPool.close()
         myPool.join()
@@ -2017,7 +2017,7 @@ class CTaskForpNovoMorGCNovo:
         if self.flagRun_MirrorNovo:
             # myPool = mp.Pool(self.dp.myCFG.D2_MULTIPROCESS_NUM)
             logToUser(INFO_TO_USER_TaskDiNovo[1])
-            print("[NOTICE] MirrorNovo cannot using multiprocessing function now(to be continued...)")
+            # print("[NOTICE] MirrorNovo cannot using multiprocessing function now(to be continued...)")
             for i in range(tryN):
                 for j in range(lysN):
                     self.subTask(i, j)
@@ -2263,14 +2263,14 @@ class CTaskForpNovoMorGCNovo:
             self.dir_path_MirrorNovo = os.path.dirname(self.deNovoModelPath_MirrorNovo) + "\\"
             if self.dp.myCFG.A7_LABEL_TYPE == 1:
 
-                self.dir_path_MirrorNovo_single = self.dir_path_MirrorNovo + "GCNovo_Neucode_Api1.2\\"
+                self.dir_path_MirrorNovo_single = self.dir_path_MirrorNovo + "GCNovo_Neucode_Api\\"
                 self.deNovoModelPath_MirrorNovo_single = self.dir_path_MirrorNovo_single + "GCNovo.py"
 
-                self.dir_path_MirrorNovo += "NeucodeApi1.1\\"
+                self.dir_path_MirrorNovo += "NeucodeApi\\"
                 self.deNovoModelPath_MirrorNovo = self.dir_path_MirrorNovo + "MirrorNovo.py"
 
             else:
-                self.dir_path_MirrorNovo_single = self.dir_path_MirrorNovo + "GCNovoApi1.1\\"
+                self.dir_path_MirrorNovo_single = self.dir_path_MirrorNovo + "GCNovoApi\\"
                 self.deNovoModelPath_MirrorNovo_single = self.dir_path_MirrorNovo_single + "GCNovo.py"
 
                 # self.dir_path_MirrorNovo += "NeucodeApi1.0\\"
@@ -2281,7 +2281,7 @@ class CTaskForpNovoMorGCNovo:
             self.deNovoModelPath_pNovoM = os.path.abspath(self.deNovoModelPath_pNovoM)
             self.dir_path_pNovoM = os.path.dirname(self.deNovoModelPath_pNovoM) + "\\"
 
-            self.dir_path_pNovoM_single = self.dir_path_pNovoM + "single\\"
+            self.dir_path_pNovoM_single = self.dir_path_pNovoM #  + "single\\"
             self.deNovoModelPath_pNovoM_single = self.dir_path_pNovoM_single + "pNovoM2_single.exe"  # "pNovoM2_single.exe"
         # self.tryMGFPath = self.dir_path + self.tryMGFPath
         # self.lysMGFPath = self.dir_path + self.lysMGFPath
@@ -2391,11 +2391,16 @@ class CTaskForpNovoMorGCNovo:
             f.write("DiNovoSpecPairsPath=" + spec_path + "\n")
             # f.write("#set output path, the default output file is denovo_result.txt" + "\n")
             f.write("OutputPath=" + tmpOut + "\n")
-            # f.write("#the follow three parameters are for cluster, if cluster=no, the three parameters are invalid" + "\n")
-            # f.write("#cluster=yes" + "\n")
-            # f.write("deltaScore=2" + "\n")
-            # f.write("TopN=10" + "\n")
-            # f.write("#N-term=27.994915" + "\n")
+            ...
+            if self.dp.myCFG.D4_MS_TOL_PPM == 1:
+                f.write("precursor_tolerance=" + str(self.dp.myCFG.D3_MS_TOL) + ";ppm\n")
+            else:
+                f.write("precursor_tolerance=" + str(self.dp.myCFG.D3_MS_TOL) + ";da\n")
+
+            if self.dp.myCFG.D6_MSMS_TOL_PPM == 1:
+                f.write("fragment_tolerance=" + str(self.dp.myCFG.D5_MSMS_TOL) + ";ppm\n")
+            else:
+                f.write("fragment_tolerance=" + str(self.dp.myCFG.D5_MSMS_TOL) + ";da\n")
             ...
 
             # f.write("#set model, default setting is recommended" + "\n")
@@ -2441,13 +2446,13 @@ class CTaskForpNovoMorGCNovo:
             # f.write("cuda_device=0" + "\n")
             f.write("processes=0" + "\n")
             f.write("num_workers=4" + "\n")
-            f.write("batch_size=" + str(self.dp.myCFG.D13_BATCH_SIZE) + "\n")
+            f.write("batch_size=" + str(self.dp.myCFG.M1_MIRRORNOVO_BATCH_SIZE) + "\n")
             f.write("num_epoch=20" + "\n")
             f.write("init_lr = 1e-3" + "\n")
             f.write("steps_per_validation = 1000" + "\n")
             f.write("weight_decay = 0.0" + "\n\n")
 
-            f.write("MAX_NUM_PEAK=500" + "\n")
+            f.write("MAX_NUM_PEAK=" + str(self.dp.myCFG.M1_MIRRORNOVO_MAX_NUM_PEAKS) + "\n")
             f.write("MZ_MAX=6000.0" + "\n")
             f.write("MAX_LEN=60" + "\n")
             if self.dp.myCFG.A7_LABEL_TYPE == 1:
@@ -2470,7 +2475,11 @@ class CTaskForpNovoMorGCNovo:
             # f.write("num_lstm_layers=1" + "\n\n")
 
             f.write("[search]" + "\n")
-            f.write("beam_size=" + str(self.dp.myCFG.D8_REPORT_PEPTIDE_NUM) + "\n")
+
+            f.write("beam_size=" + str(self.dp.myCFG.M2_GCNOVO_BEAM_SIZE) + "\n")
+            f.write("max_mass_tolerance=" + str(self.dp.myCFG.D3_MS_TOL) + "\n")
+            f.write("mass_tolerance_ppm=" + str(self.dp.myCFG.D4_MS_TOL_PPM) + "\n")
+
             if self.dp.myCFG.A7_LABEL_TYPE == 1:
                 f.write("knapsack=" + self.dir_path_MirrorNovo + "knapsackfile\\neucodeknapsack_C_M_IL.npy" + "\n\n")
             else:
@@ -2534,6 +2543,16 @@ class CTaskForpNovoMorGCNovo:
             # f.write("#set output path, the default output file is denovo_result.txt" + "\n")
             f.write("DiNovoSpecPairsPath=" + "\n")
             f.write("OutputPath=" + tmpOut + "\n")
+            # tolerance
+            if self.dp.myCFG.D4_MS_TOL_PPM == 1:
+                f.write("precursor_tolerance=" + str(self.dp.myCFG.D3_MS_TOL) + ";ppm\n")
+            else:
+                f.write("precursor_tolerance=" + str(self.dp.myCFG.D3_MS_TOL) + ";da\n")
+
+            if self.dp.myCFG.D6_MSMS_TOL_PPM == 1:
+                f.write("fragment_tolerance=" + str(self.dp.myCFG.D5_MSMS_TOL) + ";ppm\n")
+            else:
+                f.write("fragment_tolerance=" + str(self.dp.myCFG.D5_MSMS_TOL) + ";da\n")
             # f.write("#the follow three parameters are for cluster, if cluster=no, the three parameters are invalid" + "\n")
             # f.write("#cluster=yes" + "\n")
             # f.write("deltaScore=2" + "\n")
@@ -2629,13 +2648,13 @@ class CTaskForpNovoMorGCNovo:
             f.write("type=" + type_num + "\n")
             # -----------------------------
             f.write("num_workers=2" + "\n")
-            f.write("batch_size=" + str(self.dp.myCFG.D13_BATCH_SIZE)  + "\n")
+            f.write("batch_size=" + str(self.dp.myCFG.M2_GCNOVO_BATCH_SIZE)  + "\n")
             f.write("num_epoch=20" + "\n")
             f.write("init_lr = 1e-3" + "\n")
             f.write("steps_per_validation = 2000" + "\n")
             f.write("weight_decay = 0.0" + "\n\n")
 
-            f.write("MAX_NUM_PEAK=500" + "\n")
+            f.write("MAX_NUM_PEAK=" + str(self.dp.myCFG.M2_GCNOVO_MAX_NUM_PEAKS) + "\n")
             f.write("MZ_MAX=8000.0" + "\n")
             f.write("MAX_LEN=60" + "\n")
             if self.dp.myCFG.A7_LABEL_TYPE == 1:
@@ -2665,8 +2684,10 @@ class CTaskForpNovoMorGCNovo:
             f.write("dropout=0.25" + "\n\n")
 
             f.write("[search]" + "\n")
-            f.write("beam_size=" + str(self.dp.myCFG.D8_REPORT_PEPTIDE_NUM) + "\n")
+            f.write("beam_size=" + str(self.dp.myCFG.M2_GCNOVO_BEAM_SIZE) + "\n")
 
+            f.write("max_mass_tolerance=" + str(self.dp.myCFG.D3_MS_TOL) + "\n")
+            f.write("mass_tolerance_ppm=" + str(self.dp.myCFG.D4_MS_TOL_PPM) + "\n")
             if self.dp.myCFG.A7_LABEL_TYPE == 1:
                 f.write("knapsack=" + single_root + "knapsackfile\\Neucode.npy" + "\n\n")
             else:

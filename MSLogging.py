@@ -18,11 +18,12 @@ import sys
 # 以下均为静态的变量，可以直接用const list存，这里不必考虑长度的问题
 #
 INFO_TO_USER_Staff = (
-    '\n[DiNovo] Copyright (C) 2024 CAS AMSS. All rights reserved. Version 2024.10',
+    '\n[DiNovo] Copyright (C) 2026 CAS AMSS. All rights reserved. Version 2026.02',
     '\n[DiNovo] Any question, please send e-mail to: yfu@amss.ac.cn',
     '\n[DiNovo] *************** <<  Welcome to use DiNovo!  >> ******************',
     '\n[DiNovo] Writing config file...',
-    '\n[DiNovo] Please fill the .cfg file, and run DiNovo with this command: DiNovo.exe [parameter file]',
+    '\n[DiNovo] Please double click \'DiNovo.exe\' to use it',
+    '\n[DiNovo] Or fill the .cfg file, and run DiNovo with this command: DiNovoKernel.exe [parameter file]',
     '\n[DiNovo] Finished!\n\n',
 )
 

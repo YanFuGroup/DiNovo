@@ -15,8 +15,17 @@ from MSStaff import CStaff
 import os
 
 if __name__ == "__main__":
-
+    # get_path = os.path.realpath(sys.argv[0])
+    # print(get_path)
+    # get_path = os.path.realpath(__file__)
+    # print(get_path)
+    # get_path = os.path.dirname(get_path) + "\\"
+    # print(get_path)
+    # exit(3)
     multiprocessing.freeze_support()
+    # staff = CStaff(["hah"])
+    # staff = CStaff(["hahahaha", "./DiNovo.cfg"])
+    # staff = CStaff(["", "D:\\MyPythonWorkSpace\\DiNovo\\DiNovo-1.cfg"])
     staff = CStaff(sys.argv)
     staff.start()
 

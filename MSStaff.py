@@ -45,7 +45,7 @@ class CStaff:
         # finish
         dateNow = datetime.datetime.now()
         logToUser(str(dateNow))
-        logToUser(INFO_TO_USER_Staff[5])
+        logToUser(INFO_TO_USER_Staff[6])
 
 
     def __captainReportWelcome(self):
@@ -67,6 +67,7 @@ class CStaff:
             flow0 = CFlow0()
             flow0.run()
             logToUser(INFO_TO_USER_Staff[4])
+            logToUser(INFO_TO_USER_Staff[5])
 
         elif n == 2:
 
@@ -129,6 +130,7 @@ class CStaff:
                 logGetError("\n[ATTENTION]\tWrong WORK FLOW NUMBER! Please check your configuration!")
 
             # clearing
+            # if False and self.dp.myCFG.D0_WORK_FLOW_NUMBER > 1:
             if self.dp.myCFG.D0_WORK_FLOW_NUMBER > 1:
                 # combine spectral pair
                 # clearing the temp folders
@@ -164,5 +166,3 @@ class CStaff:
             if self.dp.myCFG.V0_FLAG_DO_VALIDATION == 1:
                 taskValidation = CTaskValidation(self.dp)
                 taskValidation.work()
-
-

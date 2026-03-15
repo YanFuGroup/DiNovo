@@ -77,7 +77,7 @@ class Config:
     B5_ROUND_ONE_HOLD_PEAK_NUM = 200     # int
     # 子璇的预处理方法
     B6_ROUND_TWO_REMOVE_IMMONIUM = 1     # int flag
-    B7_ROUND_TWO_PEAK_NUM_PER_BIN = 4    # int
+    B7_ROUND_TWO_PEAK_NUM_PER_BIN = 7    # int
     B8_ROUND_TWO_MASS_BIN_LENGTH = 100   # int  maybe float, but just be simple
     # 每隔100Da的质量窗口，取2根最强的峰保留下来
 
@@ -87,7 +87,7 @@ class Config:
     B10_CLASSIFICATION_MODEL_PATH = ""  # string
 
     # [Pairing]
-    C0_MIRROR_DELTA_RT = 900.0    # Retention time threshold for judging spectral pair, default: 300s.(15min * 60s/min = 900s)
+    C0_MIRROR_DELTA_RT = 10000.0  # Retention time threshold for judging spectral pair, default: 10000s.(10000s / 60s/min = 166.667min)
     C1_MIRROR_TYPE_A1 = 1         # xxK - Kxx    0.0 Da    -128.09Da|+128.09Da
     C2_MIRROR_TYPE_A2 = 1         # xxR - Rxx    0.0 Da    -156.10Da|+156.10Da
     C3_MIRROR_TYPE_A3 = 0         # xx  -  xx    0.0 Da       0.00Da
@@ -163,6 +163,15 @@ class Config:
     # -- de novo sequencing for single spectrum
     D12_DE_NOVO_SINGLE_SPECTRUM = 0 # int
     D13_BATCH_SIZE = 2
+
+    # [MIRRORNOVO] parameters of MirrorNovo
+    M1_MIRRORNOVO_MAX_NUM_PEAKS = 500
+    M1_MIRRORNOVO_BEAM_SIZE = 10
+    M1_MIRRORNOVO_BATCH_SIZE = 30
+
+    M2_GCNOVO_MAX_NUM_PEAKS = 500
+    M2_GCNOVO_BEAM_SIZE = 10
+    M2_GCNOVO_BATCH_SIZE = 2
 
 
     # [EXPORT]
@@ -268,14 +277,6 @@ class CTagDAG:
     IN_ZERO_NODE = []  # vector<int>  # 存储氨基酸路径的起点
 
 
-# 这个得用构造函数了，输入五个参数直接赋值
-class CTagInfo:
-    def __init__(self, inputLM, inputRM, inputSeq, inputScore, inputMod):
-        self.lfMass = inputLM       # 左边质量  float
-        self.rfMass = inputRM       # 右边质量  float
-        self.tagSeq = inputSeq      # 序列标签  string
-        self.tagScore = inputScore  # 打分      float
-        self.tagMod = inputMod      # 修饰信息  string
 
 
 class CDataPack:  # 这个类必须放到最后
@@ -323,17 +324,6 @@ class Candidate:
     CALCMASS : list
     AASCORE : list
     PEPSCORE : list
-
-# 含有 top-10 的结果
-class CPSM:
-
-    MS_SPEC_IDX_TRY = []
-    MS_SPEC_IDX_LYS = []
-
-
-    ID_PEP_SEQUENCE = []
-    ID_MOD_INFO = []
-    ID_CALC_MASS = []
 
 
 # for xueli

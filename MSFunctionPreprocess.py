@@ -888,6 +888,7 @@ class CFunctionPreprocessNeuCode:
             # 20230411  母离子信息去冗余，最大限度减少内存的耗费
             for i, precursorMass in enumerate(dataMS2Spectrum.LIST_PRECURSOR_MASS):
                 copyMS2Spectrum = copy.deepcopy(dataMS2Spectrum)
+                # print(copyMS2Spectrum.LIST_FILE_NAME[i])
                 copyMS2Spectrum.LIST_FILE_NAME = [copyMS2Spectrum.LIST_FILE_NAME[i]]
                 copyMS2Spectrum.LIST_PRECURSOR_CHARGE = [copyMS2Spectrum.LIST_PRECURSOR_CHARGE[i]]
                 copyMS2Spectrum.LIST_PRECURSOR_MOZ = [copyMS2Spectrum.LIST_PRECURSOR_MOZ[i]]

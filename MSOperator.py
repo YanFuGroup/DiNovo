@@ -165,7 +165,16 @@ def op_INIT_CFILE_DATAPACK(inputDP):
     inputDP.myCFG.D10_MIRROR_NOVO_MODEL_PATH = ""
     inputDP.myCFG.D11_PNOVOM_EXE_PATH = ""
     inputDP.myCFG.D12_DE_NOVO_SINGLE_SPECTRUM = 0
-    inputDP.myCFG.D13_BATCH_SIZE = 2
+    # inputDP.myCFG.D13_BATCH_SIZE = 2
+
+    # [MirrorNovo]
+    inputDP.myCFG.M1_MIRRORNOVO_MAX_NUM_PEAKS = 500
+    inputDP.myCFG.M1_MIRRORNOVO_BEAM_SIZE = 10
+    inputDP.myCFG.M1_MIRRORNOVO_BATCH_SIZE = 30
+
+    inputDP.myCFG.M2_GCNOVO_MAX_NUM_PEAKS = 500
+    inputDP.myCFG.M2_GCNOVO_BEAM_SIZE = 10
+    inputDP.myCFG.M2_GCNOVO_BATCH_SIZE = 2
 
     # [EXPORT]
     inputDP.myCFG.E1_PATH_EXPORT = '.\\test\\'
