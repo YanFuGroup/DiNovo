@@ -1,0 +1,11 @@
+
+# ==============================
+version of MirrorNovoApi
+
+   MirrorNovo          v1.5
+   MirrorNovoNeuCode   v1.5
+   GCNovo              v1.5
+   GCNovoNeuCode       v1.5
+
+time: 2026.03.15
+# ==============================
