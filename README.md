@@ -29,6 +29,18 @@ Free for academic uses. Licensed under LGPL 3.0.
 
 **Environment setup:** To use MirrorNovo, the user needs to download and install [anaconda](https://www.anaconda.com/), [CUDA](https://developer.nvidia.com/cuda-downloads) (suitable version for your GPU), and [cuDNN](https://developer.nvidia.com/rdp/cudnn-archive#a-collapse764-10) (suitable version for your GPU).
 
+`DiNovo has been tested under the following environments (the standalone executable does not require a Python environment, whereas the source code does):`
+
+- `Windows 10 Pro 22H2 with Python 3.7.4`
+
+- `Windows Server 2012 R2 Standard with Python 3.7.3`
+
+- `Windows 11 Home 25H2 with Python 3.7.4 and CUDA 12.8`
+
+- `Windows 11 Home 25H2 with Python 3.9.12 and CUDA 12.6`
+
+
+
 **Installation:** To install the compiled standalone software of DiNovo, just unzip the *"standalone.zip"* file to a local folder (it takes a few seconds) and no further steps are needed.
 
 For more detailed instructions, please refer to the *"DiNovo User Guide"*.
