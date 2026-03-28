@@ -33,12 +33,11 @@ Free for academic uses. Licensed under LGPL 3.0.
 
 - `Windows 10 Pro 22H2 with Python 3.7.4`
 
-- `Windows Server 2012 R2 Standard with Python 3.7.3`
-
 - `Windows 11 Home 25H2 with Python 3.7.4 and CUDA 12.8`
 
 - `Windows 11 Home 25H2 with Python 3.9.12 and CUDA 12.6`
 
+- `Windows Server 2012 R2 Standard with Python 3.7.3`
 
 
 **Installation:** To install the compiled standalone software of DiNovo, just unzip the *"standalone.zip"* file to a local folder (it takes a few seconds) and no further steps are needed.
